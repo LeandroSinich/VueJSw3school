@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Shooping List</title>
+</head>
+<body>
+    <div id="app">
+        <form v-on:submit.prevent="addItem">
+          <p>Add item</p>
+          <p>Item name: <input type="text" required v-model="itemName"></p>
+          <p>How many: <input type="number" v-model="itemNumber"></p>
+          <p>
+            Important?
+            <label>
+              <input type="checkbox" v-model="important">
+              {{ important }}
+            </label>
+          </p>
+          <button type="submit">Add item</button>
+        </form>
+      
+        <p><strong>Shopping list:</strong></p>
+        <ul id="ulToFind">
+          <li v-for="item in shoppingList"
+              v-bind:class="{ impClass: item.important }"
+              v-on:click="item.found=!item.found"
+              v-show="!item.found">
+                {{ item.name }}, {{ item.number}}, {{item.important}}
+          </li>
+        </ul>
+        <p><strong>Found list:</strong></p>
+        <ul id="ulFound">
+          <li v-for="item in shoppingList"
+              :class="{ impClass: item.important }"
+              v-on:click="item.found=!item.found"
+              v-show="item.found"
+              :style="{'opacity': '50%'}">
+                {{ item.name }}, {{ item.number}}, {{item.important}}
+          </li>
+        </ul>
+      
+      </div>
+      <script src="index.js"></script>
+      <script>
+        const mountedApp = app.mount("#app");
+      </script>
+</body>
+</html>
